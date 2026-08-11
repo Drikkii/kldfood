@@ -1,0 +1,27 @@
+{
+  "name": "kldfood",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Food delivery: web + API (YooKassa, R-Keeper White Server)",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @kldfood/api & npm run dev -w @kldfood/web",
+    "dev:api": "npm run dev -w @kldfood/api",
+    "dev:web": "npm run dev -w @kldfood/web",
+    "build": "npm run build:beget",
+    "build:beget": "npm run build -w @kldfood/web",
+    "build:gh-pages": "cross-env VITE_BASE_PATH=/kldfood/ npm run build -w @kldfood/web",
+    "deploy:gh-pages": "npm run build:gh-pages && gh-pages -d dist -t true",
+    "preview:gh-pages": "npm run build:gh-pages && npm run preview -w @kldfood/web",
+    "start": "npm run start -w @kldfood/api"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.3.0"
+  }
+}
