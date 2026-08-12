@@ -1,35 +1,87 @@
 import type { MenuProduct } from "../types/catalog";
+import {
+  buildProductSelections,
+  getSelectedSizeOption,
+  getSizeVariantGroup,
+  type ProductSelection,
+} from "./product-size";
 
-export function defaultSelections(product: MenuProduct) {
-  return (product.variantGroups ?? [])
-    .map((g) => ({
-      groupId: g.id,
-      optionId: g.options.find((o) => o.isDefault)?.id ?? g.options[0]?.id ?? "",
-    }))
-    .filter((s) => s.optionId);
+export function defaultSelections(product: MenuProduct): ProductSelection[] {
+  return buildProductSelections(product);
 }
 
-export function productDisplayPrice(product: MenuProduct): number {
-  if (product.basePrice != null) return product.basePrice;
-  if (product.priceFrom != null) return product.priceFrom;
-  const selections = defaultSelections(product);
+function priceFromSelections(product: MenuProduct, selections: ProductSelection[]): number {
+  const groups = product.variantGroups ?? [];
+  if (groups.length === 0) {
+    if (product.basePrice != null) return product.basePrice;
+    if (product.priceFrom != null) return product.priceFrom;
+    return 0;
+  }
+
+  let price: number | null = null;
+  for (const sel of selections) {
+    const group = groups.find((g) => g.id === sel.groupId);
+    const opt = group?.options.find((o) => o.id === sel.optionId);
+    if (opt) price = opt.price;
+  }
+  return price ?? product.basePrice ?? product.priceFrom ?? 0;
+}
+
+export function productDisplayPrice(
+  product: MenuProduct,
+  selections: ProductSelection[] = defaultSelections(product),
+): number {
+  return priceFromSelections(product, selections);
+}
+
+export function productDisplayWeight(
+  product: MenuProduct,
+  selections: ProductSelection[] = defaultSelections(product),
+): number | null {
+  if (product.pieceCount != null) return null;
+
+  const sizeOption = getSelectedSizeOption(product, selections);
+  if (sizeOption?.weightGrams != null) return sizeOption.weightGrams;
+
   for (const sel of selections) {
     const group = product.variantGroups?.find((g) => g.id === sel.groupId);
     const opt = group?.options.find((o) => o.id === sel.optionId);
-    if (opt) return opt.price;
+    if (opt?.weightGrams != null) return opt.weightGrams;
   }
-  return product.variantGroups?.[0]?.options[0]?.price ?? 0;
+
+  return product.weightGrams ?? null;
 }
 
-/** «от» только если задан priceFrom без вариантов (конструктор и т.п.). */
-export function productPriceLabel(product: MenuProduct): string {
-  const price = productDisplayPrice(product);
-  const showFrom =
-    product.priceFrom != null && (product.variantGroups?.length ?? 0) === 0;
-  return showFrom ? `от ${price} ₽` : `${price} ₽`;
+export function productDisplayMeta(
+  product: MenuProduct,
+  selections: ProductSelection[] = defaultSelections(product),
+): string | null {
+  if (product.pieceCount != null) return `${product.pieceCount} шт`;
+
+  const weight = productDisplayWeight(product, selections);
+  if (weight != null) return `${weight} г`;
+
+  return null;
+}
+
+export function productPriceLabel(
+  product: MenuProduct,
+  selections?: ProductSelection[],
+): string {
+  return `${productDisplayPrice(product, selections)} ₽`;
+}
+
+export function productMinPrice(product: MenuProduct): number {
+  const sizeGroup = getSizeVariantGroup(product);
+  if (sizeGroup && sizeGroup.options.length > 0) {
+    return Math.min(...sizeGroup.options.map((o) => o.price));
+  }
+  if (product.basePrice != null) return product.basePrice;
+  if (product.priceFrom != null) return product.priceFrom;
+  return productDisplayPrice(product);
 }
 
 export function categoryMinPrice(products: MenuProduct[]): number | null {
   if (products.length === 0) return null;
-  return Math.min(...products.map(productDisplayPrice));
+  return Math.min(...products.map(productMinPrice));
 }

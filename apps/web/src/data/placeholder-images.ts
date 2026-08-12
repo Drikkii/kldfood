@@ -1,5 +1,7 @@
 /** Филлер-фото — позже замените на файлы из public/images/ или админки */
 
+import { PRODUCT_IMAGE_BASE } from "./brand-assets";
+
 export const PLACEHOLDER = {
   shawarma: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
   burger: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
@@ -17,11 +19,13 @@ export const PLACEHOLDER = {
   tea: "https://images.pexels.com/photos/1415752/pexels-photo-1415752.jpeg?auto=compress&cs=tinysrgb&w=800",
   restaurant: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80",
   builder: "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800",
+  hotdog: "https://images.unsplash.com/photo-1612392062631-94ae3161764?auto=format&fit=crop&w=800&q=80",
 } as const;
 
 export const CATEGORY_IMAGES: Record<string, string> = {
   "cat-shawarma": PLACEHOLDER.shawarma,
   "cat-doner": PLACEHOLDER.burger,
+  "cat-lavash-dogs": `${PRODUCT_IMAGE_BASE}lavashdog-sausage.jpg`,
   "cat-potato": PLACEHOLDER.fries,
   "cat-sauces": PLACEHOLDER.sauce,
   "cat-chickenbox": PLACEHOLDER.box,
@@ -41,8 +45,9 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   "chickenbox-mix": PLACEHOLDER.box,
   "chickenbox-chicken": PLACEHOLDER.grill,
   "fries-classic": PLACEHOLDER.fries,
-  "potato-country": PLACEHOLDER.potato,
+  "snack-nuggets": PLACEHOLDER.grill,
   "sauce-classic": PLACEHOLDER.sauce,
+  "sauce-cheese": PLACEHOLDER.sauce,
   "sauce-garlic": PLACEHOLDER.sauce,
   "builder-shawarma": PLACEHOLDER.builder,
   "drink-cola": PLACEHOLDER.drinkCola,
@@ -50,21 +55,11 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   "drink-tea": PLACEHOLDER.tea,
   "drink-coffee": PLACEHOLDER.drinkHot,
   "shawarma-mix": PLACEHOLDER.shawarma,
-  "shawarma-spicy": PLACEHOLDER.grill,
-  "shawarma-cheese": PLACEHOLDER.spread,
-  "shawarma-veggie": PLACEHOLDER.shawarma,
+  "shawarma-vegan": PLACEHOLDER.shawarma,
   "doner-mix": PLACEHOLDER.burger,
-  "doner-spicy": PLACEHOLDER.grill,
-  "doner-cheese": PLACEHOLDER.pizza,
-  "doner-lamb": PLACEHOLDER.burger,
-  "potato-wedges": PLACEHOLDER.fries,
-  "potato-baked": PLACEHOLDER.potato,
-  "potato-cheese": PLACEHOLDER.fries,
-  "potato-curly": PLACEHOLDER.potato,
-  "sauce-ketchup": PLACEHOLDER.sauce,
-  "sauce-mustard": PLACEHOLDER.sauce,
-  "sauce-spicy": PLACEHOLDER.sauce,
-  "sauce-bbq": PLACEHOLDER.sauce,
+  "doner-vegan": PLACEHOLDER.burger,
+  "lavashdog-sausage": `${PRODUCT_IMAGE_BASE}lavashdog-sausage.jpg`,
+  "lavashdog-hotdog": `${PRODUCT_IMAGE_BASE}lavashdog-hotdog.jpg`,
   "drink-lemonade": PLACEHOLDER.drinkJuice,
   "drink-cappuccino": PLACEHOLDER.drinkHot,
 };
@@ -82,7 +77,11 @@ export function productImageUrl(
   categoryId?: string,
   imageUrl?: string | null,
 ): string {
-  if (imageUrl) return imageUrl;
+  if (imageUrl) {
+    if (/^https?:\/\//.test(imageUrl) || imageUrl.startsWith("data:")) return imageUrl;
+    const path = imageUrl.startsWith("/") ? imageUrl.slice(1) : imageUrl;
+    return `${import.meta.env.BASE_URL}${path}`;
+  }
   if (PRODUCT_IMAGES[productId]) return PRODUCT_IMAGES[productId];
   if (categoryId && CATEGORY_IMAGES[categoryId]) return CATEGORY_IMAGES[categoryId];
   return PLACEHOLDER.spread;

@@ -6,6 +6,7 @@ import { categoryImageUrl } from "./placeholder-images";
 export const CATEGORY_TILE_ACCENTS: Record<string, string> = {
   "cat-shawarma": "#1a1a1a",
   "cat-doner": "#242424",
+  "cat-lavash-dogs": "#222222",
   "cat-potato": "#1e1e1e",
   "cat-sauces": "#282828",
   "cat-drinks": "#1a1a1a",

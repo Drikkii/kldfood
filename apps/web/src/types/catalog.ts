@@ -17,17 +17,31 @@ export type MenuCategory = {
   imageUrl?: string;
 };
 
+export type SizeIconKey = "mini" | "standard" | "mega";
+
+/** Admin: kind="size" → UI с иконками; options задают цену/вес или priceDelta/weightDelta от mini */
+export type VariantGroupKind = "size" | "default";
+
 export type VariantOption = {
   id: string;
   name: string;
   price: number;
   weightGrams?: number;
+  /** Admin: доплата к mini-тарифу (₽) */
+  priceDelta?: number;
+  /** Admin: прибавка к mini-весу (г) */
+  weightDelta?: number;
+  /** Admin: ключ иконки для kind=size */
+  iconKey?: SizeIconKey;
   isDefault?: boolean;
+  stopped?: boolean;
+  rkeeperCode?: string | null;
 };
 
 export type VariantGroup = {
   id: string;
   name: string;
+  kind?: VariantGroupKind;
   required?: boolean;
   options: VariantOption[];
 };
@@ -55,6 +69,8 @@ export type MenuProduct = {
   description?: string;
   imageUrl?: string;
   weightGrams?: number;
+  /** Количество штук вместо граммов (например нагетсы) */
+  pieceCount?: number;
   priceFrom?: number;
   basePrice?: number;
   rating?: number;

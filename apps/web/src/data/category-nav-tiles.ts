@@ -25,8 +25,15 @@ export const CATEGORY_NAV_TILES: CategoryNavTile[] = [
     imageKey: "cat-doner",
   },
   {
+    id: "nav-lavash-dogs",
+    label: "Лаваш-доги",
+    targetCategoryId: "cat-lavash-dogs",
+    priceCategoryIds: ["cat-lavash-dogs"],
+    imageKey: "cat-lavash-dogs",
+  },
+  {
     id: "nav-potato",
-    label: "Картошка",
+    label: "Закуски",
     targetCategoryId: "cat-potato",
     priceCategoryIds: ["cat-potato"],
     imageKey: "cat-potato",
@@ -44,19 +51,5 @@ export const CATEGORY_NAV_TILES: CategoryNavTile[] = [
     targetCategoryId: "cat-drinks",
     priceCategoryIds: ["cat-drinks-cold", "cat-drinks-hot"],
     imageKey: "cat-drinks",
-  },
-  {
-    id: "nav-spoons",
-    label: "Ложки",
-    targetCategoryId: "cat-sauces",
-    priceCategoryIds: ["cat-sauces"],
-    imageKey: "cat-spoons",
-  },
-  {
-    id: "nav-napkins",
-    label: "Салфетки",
-    targetCategoryId: "cat-potato",
-    priceCategoryIds: ["cat-potato"],
-    imageKey: "cat-napkins",
   },
 ];

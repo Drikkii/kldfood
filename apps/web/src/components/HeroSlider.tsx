@@ -169,6 +169,8 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
   const isLoop = count > 1;
   const viewportRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
+  const isLockedRef = useRef(false);
+  const snapTimerRef = useRef<number | null>(null);
   const { slideWidth, peek, slideGap, isMobile } = useSliderMetrics(viewportRef);
   const [position, setPosition] = useState(isLoop ? 1 : 0);
   const [animating, setAnimating] = useState(true);
@@ -178,19 +180,43 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
 
   positionRef.current = position;
 
+  const clearSnapTimer = useCallback(() => {
+    if (snapTimerRef.current != null) {
+      window.clearTimeout(snapTimerRef.current);
+      snapTimerRef.current = null;
+    }
+  }, []);
+
+  const unlockSlider = useCallback(() => {
+    isLockedRef.current = false;
+  }, []);
+
   const snapLoopClone = useCallback(() => {
-    if (!isLoop) return;
+    if (!isLoop) {
+      unlockSlider();
+      return;
+    }
     const pos = positionRef.current;
     if (pos === count + 1) {
       setAnimating(false);
       setPosition(1);
+      window.requestAnimationFrame(unlockSlider);
       return;
     }
     if (pos === 0) {
       setAnimating(false);
       setPosition(count);
+      window.requestAnimationFrame(unlockSlider);
+      return;
     }
-  }, [count, isLoop]);
+    if (pos > count + 1 || pos < 0) {
+      setAnimating(false);
+      setPosition(Math.min(Math.max(pos, 1), count));
+      window.requestAnimationFrame(unlockSlider);
+      return;
+    }
+    unlockSlider();
+  }, [count, isLoop, unlockSlider]);
 
   const loopSlides = useMemo(() => {
     if (!isLoop) return slides;
@@ -201,24 +227,38 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
 
   const goToDot = useCallback(
     (dotIndex: number) => {
-      if (count === 0) return;
+      if (count === 0 || isLockedRef.current) return;
+      isLockedRef.current = true;
+      clearSnapTimer();
       setAnimating(true);
       setPosition(isLoop ? dotIndex + 1 : 0);
     },
-    [count, isLoop],
+    [count, isLoop, clearSnapTimer],
   );
 
   const goNext = useCallback(() => {
-    if (count === 0) return;
+    if (count === 0 || isLockedRef.current) return;
+    isLockedRef.current = true;
+    clearSnapTimer();
     setAnimating(true);
-    setPosition((prev) => (isLoop ? prev + 1 : (prev + 1) % count));
-  }, [count, isLoop]);
+    setPosition((prev) => {
+      if (!isLoop) return (prev + 1) % count;
+      const next = prev + 1;
+      return next > count + 1 ? count + 1 : next;
+    });
+  }, [count, isLoop, clearSnapTimer]);
 
   const goPrev = useCallback(() => {
-    if (count === 0) return;
+    if (count === 0 || isLockedRef.current) return;
+    isLockedRef.current = true;
+    clearSnapTimer();
     setAnimating(true);
-    setPosition((prev) => (isLoop ? prev - 1 : (prev - 1 + count) % count));
-  }, [count, isLoop]);
+    setPosition((prev) => {
+      if (!isLoop) return (prev - 1 + count) % count;
+      const next = prev - 1;
+      return next < 0 ? 0 : next;
+    });
+  }, [count, isLoop, clearSnapTimer]);
 
   const onTouchStart = useCallback((event: TouchEvent<HTMLDivElement>) => {
     touchStartX.current = event.touches[0]?.clientX ?? 0;
@@ -230,7 +270,7 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
       const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
       const delta = endX - touchStartX.current;
 
-      if (Math.abs(delta) >= SWIPE_THRESHOLD_PX) {
+      if (Math.abs(delta) >= SWIPE_THRESHOLD_PX && !isLockedRef.current) {
         if (delta < 0) goNext();
         else goPrev();
       }
@@ -240,23 +280,33 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
     [goNext, goPrev],
   );
 
+  const onTouchCancel = useCallback(() => {
+    setPaused(false);
+  }, []);
+
   const onTrackTransitionEnd = useCallback(
     (event: TransitionEvent<HTMLDivElement>) => {
       if (!isLoop) return;
       if (event.target !== event.currentTarget) return;
       if (event.propertyName !== "transform") return;
+      clearSnapTimer();
       snapLoopClone();
     },
-    [isLoop, snapLoopClone],
+    [isLoop, snapLoopClone, clearSnapTimer],
   );
 
   useEffect(() => {
     if (!isLoop) return;
     if (position !== count + 1 && position !== 0) return;
 
-    const timer = window.setTimeout(snapLoopClone, TRACK_TRANSITION_MS + 80);
-    return () => window.clearTimeout(timer);
-  }, [position, isLoop, count, snapLoopClone]);
+    clearSnapTimer();
+    snapTimerRef.current = window.setTimeout(() => {
+      snapTimerRef.current = null;
+      snapLoopClone();
+    }, TRACK_TRANSITION_MS + 80);
+
+    return clearSnapTimer;
+  }, [position, isLoop, count, snapLoopClone, clearSnapTimer]);
 
   useEffect(() => {
     const onVisibility = () => {
@@ -311,6 +361,7 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
           ref={viewportRef}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchCancel}
         >
           <div
             className={`hero-slider__track${animating ? " is-animating" : ""}`}

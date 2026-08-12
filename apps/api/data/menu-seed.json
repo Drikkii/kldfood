@@ -14,39 +14,45 @@
       "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"
     },
     {
+      "id": "cat-lavash-dogs",
+      "name": "Лаваш-доги",
+      "sort": 3,
+      "imageUrl": "https://images.unsplash.com/photo-1612392062631-94ae3161764?auto=format&fit=crop&w=800&q=80"
+    },
+    {
       "id": "cat-chickenbox",
       "name": "Чикенбокс",
-      "sort": 3,
+      "sort": 4,
       "imageUrl": "https://images.unsplash.com/photo-1608039256273-f397afbd6924?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "cat-potato",
-      "name": "Картошка",
-      "sort": 4,
+      "name": "Закуски",
+      "sort": 5,
       "imageUrl": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "cat-sauces",
       "name": "Соусы",
-      "sort": 5,
+      "sort": 6,
       "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "cat-builder",
       "name": "Конструктор",
-      "sort": 6,
+      "sort": 7,
       "imageUrl": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "cat-drinks-cold",
       "name": "Холодные напитки",
-      "sort": 7,
+      "sort": 8,
       "imageUrl": "https://images.pexels.com/photos/5059068/pexels-photo-5059068.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "cat-drinks-hot",
       "name": "Горячие напитки",
-      "sort": 8,
+      "sort": 9,
       "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
     }
   ],
@@ -54,10 +60,10 @@
     {
       "id": "shawarma-chicken",
       "categoryId": "cat-shawarma",
-      "name": "Шаурма с курицей",
+      "name": "Шаурма курица",
       "description": "Лаваш, курица, овощи, соусы на выбор.",
       "imageUrl": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
-      "weightGrams": 430,
+      "weightGrams": 370,
       "priceFrom": 290,
       "rating": 8.9,
       "rkeeperCode": null,
@@ -65,11 +71,40 @@
         {
           "id": "size",
           "name": "Размер",
+          "kind": "size",
           "required": true,
           "options": [
-            { "id": "mini", "name": "Мини", "price": 290, "weightGrams": 300, "isDefault": true, "rkeeperCode": null },
-            { "id": "standard", "name": "Стандарт", "price": 360, "weightGrams": 430, "rkeeperCode": null },
-            { "id": "mega", "name": "Мега", "price": 420, "weightGrams": 550, "rkeeperCode": null }
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 290,
+              "weightGrams": 370,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 320,
+              "weightGrams": 400,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            },
+            {
+              "id": "mega",
+              "name": "Мега",
+              "iconKey": "mega",
+              "price": 350,
+              "weightGrams": 430,
+              "priceDelta": 60,
+              "weightDelta": 60,
+              "rkeeperCode": null
+            }
           ]
         }
       ],
@@ -80,8 +115,71 @@
           "minPick": 0,
           "maxPick": 8,
           "modifiers": [
-            { "id": "extra-cheese", "name": "Сыр моцарелла", "price": 55, "maxQuantity": 3, "rkeeperCode": null },
-            { "id": "extra-bacon", "name": "Бекон", "price": 80, "maxQuantity": 2, "rkeeperCode": null }
+            {
+              "id": "extra-cheese",
+              "name": "Сыр моцарелла",
+              "price": 55,
+              "maxQuantity": 3,
+              "rkeeperCode": null
+            },
+            {
+              "id": "extra-bacon",
+              "name": "Бекон",
+              "price": 80,
+              "maxQuantity": 2,
+              "rkeeperCode": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shawarma-mix",
+      "categoryId": "cat-shawarma",
+      "name": "Шаурма mix",
+      "description": "Курица и говядина, овощи, соусы.",
+      "imageUrl": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
+      "priceFrom": 340,
+      "weightGrams": 390,
+      "rkeeperCode": null,
+      "variantGroups": [
+        {
+          "id": "size",
+          "name": "Размер",
+          "kind": "size",
+          "required": true,
+          "options": [
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 340,
+              "weightGrams": 390,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 370,
+              "weightGrams": 420,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            },
+            {
+              "id": "mega",
+              "name": "Мега",
+              "iconKey": "mega",
+              "price": 400,
+              "weightGrams": 450,
+              "priceDelta": 60,
+              "weightDelta": 60,
+              "rkeeperCode": null
+            }
           ]
         }
       ]
@@ -89,21 +187,101 @@
     {
       "id": "shawarma-beef",
       "categoryId": "cat-shawarma",
-      "name": "Шаурма с говядиной",
+      "name": "Шаурма говядина",
       "description": "Лаваш, говядина, овощи, соусы на выбор.",
       "imageUrl": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
-      "weightGrams": 430,
+      "weightGrams": 370,
       "priceFrom": 320,
       "rkeeperCode": null,
       "variantGroups": [
         {
           "id": "size",
           "name": "Размер",
+          "kind": "size",
           "required": true,
           "options": [
-            { "id": "mini", "name": "Мини", "price": 320, "isDefault": true, "rkeeperCode": null },
-            { "id": "standard", "name": "Стандарт", "price": 390, "rkeeperCode": null },
-            { "id": "mega", "name": "Мега", "price": 450, "rkeeperCode": null }
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 320,
+              "weightGrams": 370,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 350,
+              "weightGrams": 400,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            },
+            {
+              "id": "mega",
+              "name": "Мега",
+              "iconKey": "mega",
+              "price": 380,
+              "weightGrams": 430,
+              "priceDelta": 60,
+              "weightDelta": 60,
+              "rkeeperCode": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shawarma-vegan",
+      "categoryId": "cat-shawarma",
+      "name": "Шаурма vegan",
+      "description": "Овощи гриль, хумус, зелень.",
+      "imageUrl": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
+      "priceFrom": 260,
+      "weightGrams": 320,
+      "rkeeperCode": null,
+      "variantGroups": [
+        {
+          "id": "size",
+          "name": "Размер",
+          "kind": "size",
+          "required": true,
+          "options": [
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 260,
+              "weightGrams": 320,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 290,
+              "weightGrams": 350,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            },
+            {
+              "id": "mega",
+              "name": "Мега",
+              "iconKey": "mega",
+              "price": 320,
+              "weightGrams": 380,
+              "priceDelta": 60,
+              "weightDelta": 60,
+              "rkeeperCode": null
+            }
           ]
         }
       ]
@@ -111,21 +289,81 @@
     {
       "id": "doner-chicken",
       "categoryId": "cat-doner",
-      "name": "Денер с курицей",
+      "name": "Денер курица",
       "description": "Булка, курица, овощи, соусы.",
       "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
-      "weightGrams": 430,
+      "weightGrams": 370,
       "priceFrom": 290,
       "rkeeperCode": null,
       "variantGroups": [
         {
           "id": "size",
           "name": "Размер",
+          "kind": "size",
           "required": true,
           "options": [
-            { "id": "mini", "name": "Мини", "price": 290, "isDefault": true, "rkeeperCode": null },
-            { "id": "standard", "name": "Стандарт", "price": 360, "rkeeperCode": null },
-            { "id": "mega", "name": "Мега", "price": 420, "rkeeperCode": null }
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 290,
+              "weightGrams": 370,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 320,
+              "weightGrams": 400,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doner-mix",
+      "categoryId": "cat-doner",
+      "name": "Денер mix",
+      "description": "Курица и говядина в булке.",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+      "priceFrom": 340,
+      "weightGrams": 390,
+      "rkeeperCode": null,
+      "variantGroups": [
+        {
+          "id": "size",
+          "name": "Размер",
+          "kind": "size",
+          "required": true,
+          "options": [
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 340,
+              "weightGrams": 390,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 370,
+              "weightGrams": 420,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            }
           ]
         }
       ]
@@ -133,22 +371,103 @@
     {
       "id": "doner-beef",
       "categoryId": "cat-doner",
-      "name": "Денер с говядиной",
+      "name": "Денер говядина",
       "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
       "priceFrom": 320,
-      "weightGrams": 430,
+      "weightGrams": 370,
       "rkeeperCode": null,
       "variantGroups": [
         {
           "id": "size",
           "name": "Размер",
+          "kind": "size",
           "required": true,
           "options": [
-            { "id": "mini", "name": "Мини", "price": 320, "isDefault": true, "rkeeperCode": null },
-            { "id": "standard", "name": "Стандарт", "price": 390, "rkeeperCode": null }
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 320,
+              "weightGrams": 370,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 350,
+              "weightGrams": 400,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            }
           ]
         }
       ]
+    },
+    {
+      "id": "doner-vegan",
+      "categoryId": "cat-doner",
+      "name": "Денер vegan",
+      "description": "Булка, овощи гриль, хумус, зелень.",
+      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+      "priceFrom": 260,
+      "weightGrams": 320,
+      "rkeeperCode": null,
+      "variantGroups": [
+        {
+          "id": "size",
+          "name": "Размер",
+          "kind": "size",
+          "required": true,
+          "options": [
+            {
+              "id": "mini",
+              "name": "Мини",
+              "iconKey": "mini",
+              "price": 260,
+              "weightGrams": 320,
+              "priceDelta": 0,
+              "weightDelta": 0,
+              "rkeeperCode": null
+            },
+            {
+              "id": "standard",
+              "name": "Стандарт",
+              "iconKey": "standard",
+              "price": 290,
+              "weightGrams": 350,
+              "priceDelta": 30,
+              "weightDelta": 30,
+              "rkeeperCode": null,
+              "isDefault": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lavashdog-sausage",
+      "categoryId": "cat-lavash-dogs",
+      "name": "Сосиска в лаваше",
+      "description": "Лаваш, сосиска, соусы и овощи.",
+      "imageUrl": "/images/products/lavashdog-sausage.jpg",
+      "basePrice": 180,
+      "weightGrams": 280,
+      "rkeeperCode": null
+    },
+    {
+      "id": "lavashdog-hotdog",
+      "categoryId": "cat-lavash-dogs",
+      "name": "Хот-Дог",
+      "description": "Булка, сосиска, соусы.",
+      "imageUrl": "/images/products/lavashdog-hotdog.jpg",
+      "basePrice": 160,
+      "weightGrams": 250,
+      "rkeeperCode": null
     },
     {
       "id": "chickenbox-mix",
@@ -172,7 +491,7 @@
     {
       "id": "fries-classic",
       "categoryId": "cat-potato",
-      "name": "Картофель фри",
+      "name": "Картошка фри",
       "imageUrl": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=800",
       "basePrice": 80,
       "weightGrams": 100,
@@ -180,18 +499,28 @@
       "rkeeperCode": null
     },
     {
-      "id": "potato-country",
+      "id": "snack-nuggets",
       "categoryId": "cat-potato",
-      "name": "Картофель по-деревенски",
-      "imageUrl": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "name": "Нагетсы",
+      "imageUrl": "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80",
       "basePrice": 120,
-      "weightGrams": 120,
+      "pieceCount": 10,
+      "rating": 9.5,
       "rkeeperCode": null
     },
     {
       "id": "sauce-classic",
       "categoryId": "cat-sauces",
       "name": "Соус классический",
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "basePrice": 20,
+      "weightGrams": 30,
+      "rkeeperCode": null
+    },
+    {
+      "id": "sauce-cheese",
+      "categoryId": "cat-sauces",
+      "name": "Соус сырный",
       "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
       "basePrice": 20,
       "weightGrams": 30,
@@ -227,8 +556,19 @@
           "name": "Объём",
           "required": true,
           "options": [
-            { "id": "0_3", "name": "0,3 л", "price": 70, "isDefault": true, "rkeeperCode": null },
-            { "id": "0_5", "name": "0,5 л", "price": 90, "rkeeperCode": null }
+            {
+              "id": "0_3",
+              "name": "0,3 л",
+              "price": 70,
+              "isDefault": true,
+              "rkeeperCode": null
+            },
+            {
+              "id": "0_5",
+              "name": "0,5 л",
+              "price": 90,
+              "rkeeperCode": null
+            }
           ]
         }
       ]
@@ -255,158 +595,6 @@
       "name": "Кофе",
       "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
       "basePrice": 120,
-      "rkeeperCode": null
-    },
-    {
-      "id": "shawarma-mix",
-      "categoryId": "cat-shawarma",
-      "name": "Шаурма микс",
-      "description": "Курица и говядина, овощи, соусы.",
-      "imageUrl": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 340,
-      "weightGrams": 450,
-      "rkeeperCode": null
-    },
-    {
-      "id": "shawarma-spicy",
-      "categoryId": "cat-shawarma",
-      "name": "Шаурма острая",
-      "description": "Курица, перец, острый соус.",
-      "imageUrl": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 310,
-      "weightGrams": 430,
-      "rkeeperCode": null
-    },
-    {
-      "id": "shawarma-cheese",
-      "categoryId": "cat-shawarma",
-      "name": "Шаурма с сыром",
-      "description": "Курица, сыр моцарелла, овощи.",
-      "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 330,
-      "weightGrams": 440,
-      "rkeeperCode": null
-    },
-    {
-      "id": "shawarma-veggie",
-      "categoryId": "cat-shawarma",
-      "name": "Шаурма овощная",
-      "description": "Овощи гриль, хумус, зелень.",
-      "imageUrl": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 260,
-      "weightGrams": 380,
-      "rkeeperCode": null
-    },
-    {
-      "id": "doner-mix",
-      "categoryId": "cat-doner",
-      "name": "Денер микс",
-      "description": "Курица и говядина в булке.",
-      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 340,
-      "weightGrams": 450,
-      "rkeeperCode": null
-    },
-    {
-      "id": "doner-spicy",
-      "categoryId": "cat-doner",
-      "name": "Денер острый",
-      "description": "Курица, перец, острый соус.",
-      "imageUrl": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 310,
-      "weightGrams": 430,
-      "rkeeperCode": null
-    },
-    {
-      "id": "doner-cheese",
-      "categoryId": "cat-doner",
-      "name": "Денер с сыром",
-      "description": "Курица, сыр, соус на выбор.",
-      "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 330,
-      "weightGrams": 440,
-      "rkeeperCode": null
-    },
-    {
-      "id": "doner-lamb",
-      "categoryId": "cat-doner",
-      "name": "Денер с бараниной",
-      "description": "Булка, баранина, овощи, соусы.",
-      "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 350,
-      "weightGrams": 430,
-      "rkeeperCode": null
-    },
-    {
-      "id": "potato-wedges",
-      "categoryId": "cat-potato",
-      "name": "Картофельные дольки",
-      "imageUrl": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 110,
-      "weightGrams": 110,
-      "rkeeperCode": null
-    },
-    {
-      "id": "potato-baked",
-      "categoryId": "cat-potato",
-      "name": "Картофель запечённый",
-      "imageUrl": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 130,
-      "weightGrams": 150,
-      "rkeeperCode": null
-    },
-    {
-      "id": "potato-cheese",
-      "categoryId": "cat-potato",
-      "name": "Картофель с сыром",
-      "imageUrl": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 140,
-      "weightGrams": 130,
-      "rkeeperCode": null
-    },
-    {
-      "id": "potato-curly",
-      "categoryId": "cat-potato",
-      "name": "Картофель крутой",
-      "imageUrl": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 100,
-      "weightGrams": 100,
-      "rkeeperCode": null
-    },
-    {
-      "id": "sauce-ketchup",
-      "categoryId": "cat-sauces",
-      "name": "Кetchup",
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 20,
-      "weightGrams": 30,
-      "rkeeperCode": null
-    },
-    {
-      "id": "sauce-mustard",
-      "categoryId": "cat-sauces",
-      "name": "Горчица",
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 20,
-      "weightGrams": 30,
-      "rkeeperCode": null
-    },
-    {
-      "id": "sauce-spicy",
-      "categoryId": "cat-sauces",
-      "name": "Соус острый",
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 25,
-      "weightGrams": 30,
-      "rkeeperCode": null
-    },
-    {
-      "id": "sauce-bbq",
-      "categoryId": "cat-sauces",
-      "name": "Соус BBQ",
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "basePrice": 25,
-      "weightGrams": 30,
       "rkeeperCode": null
     },
     {

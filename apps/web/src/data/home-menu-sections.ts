@@ -8,7 +8,8 @@ export type HomeMenuSectionConfig = {
 export const HOME_MENU_SECTIONS: HomeMenuSectionConfig[] = [
   { id: "cat-shawarma", title: "Шаурма", categoryIds: ["cat-shawarma"] },
   { id: "cat-doner", title: "Денер", categoryIds: ["cat-doner"] },
-  { id: "cat-potato", title: "Картошка", categoryIds: ["cat-potato"] },
+  { id: "cat-lavash-dogs", title: "Лаваш-доги", categoryIds: ["cat-lavash-dogs"] },
+  { id: "cat-potato", title: "Закуски", categoryIds: ["cat-potato"] },
   { id: "cat-sauces", title: "Соусы", categoryIds: ["cat-sauces"] },
   {
     id: "cat-drinks",

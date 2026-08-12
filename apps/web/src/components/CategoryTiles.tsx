@@ -16,7 +16,10 @@ export function CategoryTiles({
   return (
     <nav className="category-tiles" aria-label="Категории меню">
       <div className="category-tiles__scroll">
-        <ul className="category-tiles__grid">
+        <ul
+          className="category-tiles__grid"
+          style={{ ["--category-nav-count" as string]: tiles.length }}
+        >
         {tiles.map((tile) => {
           const minPrice = navTileMinPrice(tile, productsByCategory);
           const accent = categoryTileAccent(tile.imageKey);

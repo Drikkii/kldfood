@@ -6,24 +6,13 @@ import { MobileCart } from "../components/MobileCart";
 import { StickyCart } from "../components/StickyCart";
 import { useSession } from "../context/SessionContext";
 import { HOME_MENU_SECTIONS } from "../data/home-menu-sections";
-import type { MenuProduct } from "../types/catalog";
+import type { CartLine, MenuProduct } from "../types/catalog";
 import { loadMenu } from "../utils/load-menu";
-import { productToCartLine } from "../utils/product-to-cart-line";
-
-function getScrollOffset() {
-  const isMobileCatalog = window.matchMedia("(max-width: 1023px)").matches;
-  if (isMobileCatalog) {
-    const categories = document.querySelector(".home-catalog__categories");
-    return categories ? categories.getBoundingClientRect().height + 8 : 72;
-  }
-  return 64;
-}
 
 function scrollToCategory(categoryId: string) {
   const el = document.getElementById(`category-${categoryId}`);
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - getScrollOffset();
-  window.scrollTo({ top, behavior: "smooth" });
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function HomePage() {
@@ -72,8 +61,8 @@ export function HomePage() {
   }, []);
 
   const onProductSelect = useCallback(
-    (product: MenuProduct) => {
-      tryAddToCart(productToCartLine(product));
+    (line: CartLine) => {
+      tryAddToCart(line);
     },
     [tryAddToCart],
   );

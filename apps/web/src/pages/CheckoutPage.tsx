@@ -132,6 +132,9 @@ export function CheckoutPage() {
                 />
                 <div className="checkout-cart__body">
                   <strong className="checkout-cart__name">{line.name}</strong>
+                  {line.variantLabel ? (
+                    <span className="checkout-cart__variant">{line.variantLabel}</span>
+                  ) : null}
                   <span className="checkout-cart__price">
                     {line.unitPrice} ₽ × {line.quantity} = {line.unitPrice * line.quantity} ₽
                   </span>

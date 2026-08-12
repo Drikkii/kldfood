@@ -9,6 +9,7 @@ export function toPublicProduct(product) {
     variantGroups: variantGroups?.map((g) => ({
       id: g.id,
       name: g.name,
+      kind: g.kind,
       required: g.required,
       options: g.options.map((o) => {
         const { rkeeperCode: _rk, stopped, ...opt } = o;

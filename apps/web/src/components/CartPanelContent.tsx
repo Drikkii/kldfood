@@ -24,7 +24,7 @@ export function CartPanelContent({ onNavigate, showHeading = true }: CartPanelCo
         <div className="sticky-cart__empty-copy">
           <h2 className="sticky-cart__empty-heading">Корзина</h2>
           <div className="sticky-cart__empty-message">
-            <p className="sticky-cart__empty-title">ваша корзина капуста</p>
+            <p className="sticky-cart__empty-title">ваша корзина пуста</p>
             <p className="sticky-cart__empty-sub">
               Добавьте товары
               <br />
@@ -46,7 +46,12 @@ export function CartPanelContent({ onNavigate, showHeading = true }: CartPanelCo
           </button>
         </div>
       ) : null}
-      {location ? <p className="sticky-cart__location">{location.name}</p> : null}
+      {location ? (
+        <p className="sticky-cart__location">
+          <span className="sticky-cart__location-name">{location.name}</span>
+          <span className="sticky-cart__location-address">{location.address}</span>
+        </p>
+      ) : null}
       <ul className="sticky-cart__lines">
         {cart.map((line, index) => (
           <li key={`${line.productId}-${index}`} className="sticky-cart__line">
@@ -57,6 +62,9 @@ export function CartPanelContent({ onNavigate, showHeading = true }: CartPanelCo
             />
             <div className="sticky-cart__line-info">
               <span className="sticky-cart__line-name">{line.name}</span>
+              {line.variantLabel ? (
+                <span className="sticky-cart__line-variant">{line.variantLabel}</span>
+              ) : null}
               <span className="sticky-cart__line-price">
                 {line.unitPrice} ₽ × {line.quantity} = {line.unitPrice * line.quantity} ₽
               </span>

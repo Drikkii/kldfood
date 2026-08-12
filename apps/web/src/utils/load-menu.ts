@@ -1,6 +1,7 @@
 import { fetchMenu } from "../api/client";
 import { getFallbackMenu } from "../data/fallback-menu";
 import type { MenuCategory, MenuProduct } from "../types/catalog";
+import { ensureMenuProductSizes } from "./product-size";
 
 export async function loadMenu(locationId?: string | null): Promise<{
   categories: MenuCategory[];
@@ -8,12 +9,16 @@ export async function loadMenu(locationId?: string | null): Promise<{
 }> {
   try {
     const data = await fetchMenu(locationId ?? null);
-    if (data.categories.length === 0) return getFallbackMenu();
+    if (data.categories.length === 0) {
+      const fallback = getFallbackMenu();
+      return { ...fallback, products: ensureMenuProductSizes(fallback.products) };
+    }
     return {
       categories: data.categories,
-      products: data.products as MenuProduct[],
+      products: ensureMenuProductSizes(data.products as MenuProduct[]),
     };
   } catch {
-    return getFallbackMenu();
+    const fallback = getFallbackMenu();
+    return { ...fallback, products: ensureMenuProductSizes(fallback.products) };
   }
 }
