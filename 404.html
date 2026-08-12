@@ -16,8 +16,16 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/kldfood/assets/index-Cum_1W0x.js"></script>
-    <link rel="stylesheet" crossorigin href="/kldfood/assets/index-BbxD5o7x.css">
+    <script>
+      (function () {
+        if (/^#category-/.test(location.hash)) {
+          history.replaceState(null, "", location.pathname + location.search);
+        }
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      })();
+    </script>
+    <script type="module" crossorigin src="/kldfood/assets/index-CwTQL5tW.js"></script>
+    <link rel="stylesheet" crossorigin href="/kldfood/assets/index-CYwr8DpK.css">
   </head>
   <body>
     <div id="root"></div>
