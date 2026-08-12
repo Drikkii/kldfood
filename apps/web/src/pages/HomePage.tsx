@@ -48,15 +48,7 @@ export function HomePage() {
     [productsByCategory],
   );
 
-  useEffect(() => {
-    const hash = window.location.hash.replace(/^#/, "");
-    if (!hash.startsWith("category-")) return;
-    const categoryId = hash.slice("category-".length);
-    window.requestAnimationFrame(() => scrollToCategory(categoryId));
-  }, [homeSections]);
-
   const onCategorySelect = useCallback((categoryId: string) => {
-    window.history.replaceState(null, "", `#category-${categoryId}`);
     scrollToCategory(categoryId);
   }, []);
 

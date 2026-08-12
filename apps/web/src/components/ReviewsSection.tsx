@@ -25,12 +25,31 @@ export function ReviewsSection() {
     const el = scrollRef.current;
     if (!el) return;
 
-    const firstCard = el.querySelector<HTMLElement>(".home-reviews-card");
-    const cardWidth = firstCard?.offsetWidth ?? el.clientWidth * 0.82;
-    const gap = Number.parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || "0") || 14;
+    const cards = Array.from(el.querySelectorAll<HTMLElement>(".home-reviews-card"));
+    if (cards.length === 0) return;
 
-    el.scrollBy({
-      left: direction * (cardWidth + gap),
+    const scrollLeft = el.scrollLeft;
+    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+    const epsilon = 4;
+
+    let targetLeft: number;
+
+    if (direction === 1) {
+      const nextCard = cards.find((card) => card.offsetLeft > scrollLeft + epsilon);
+      targetLeft = nextCard ? nextCard.offsetLeft : maxScroll;
+    } else {
+      targetLeft = 0;
+      for (const card of cards) {
+        if (card.offsetLeft < scrollLeft - epsilon) {
+          targetLeft = card.offsetLeft;
+        } else {
+          break;
+        }
+      }
+    }
+
+    el.scrollTo({
+      left: targetLeft,
       behavior: "smooth",
     });
   }, []);
