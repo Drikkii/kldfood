@@ -45,4 +45,18 @@ export const CATEGORY_NAV_TILES: CategoryNavTile[] = [
     priceCategoryIds: ["cat-drinks-cold", "cat-drinks-hot"],
     imageKey: "cat-drinks",
   },
+  {
+    id: "nav-spoons",
+    label: "Ложки",
+    targetCategoryId: "cat-sauces",
+    priceCategoryIds: ["cat-sauces"],
+    imageKey: "cat-spoons",
+  },
+  {
+    id: "nav-napkins",
+    label: "Салфетки",
+    targetCategoryId: "cat-potato",
+    priceCategoryIds: ["cat-potato"],
+    imageKey: "cat-napkins",
+  },
 ];

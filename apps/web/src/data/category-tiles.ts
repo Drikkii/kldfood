@@ -9,6 +9,8 @@ export const CATEGORY_TILE_ACCENTS: Record<string, string> = {
   "cat-potato": "#1e1e1e",
   "cat-sauces": "#282828",
   "cat-drinks": "#1a1a1a",
+  "cat-spoons": "#2a2a2a",
+  "cat-napkins": "#303030",
 };
 
 export function categoryTileAccent(imageKey: string): string {

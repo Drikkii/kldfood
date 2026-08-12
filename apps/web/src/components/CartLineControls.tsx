@@ -6,6 +6,17 @@ type CartLineControlsProps = {
   compact?: boolean;
 };
 
+function IconTrash() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+      />
+    </svg>
+  );
+}
+
 export function CartLineControls({ index, quantity, compact }: CartLineControlsProps) {
   const { changeCartLineQuantity, removeCartLine } = useSession();
 
@@ -42,7 +53,7 @@ export function CartLineControls({ index, quantity, compact }: CartLineControlsP
         aria-label="Удалить из корзины"
         onClick={() => removeCartLine(index)}
       >
-        Удалить
+        <IconTrash />
       </button>
     </div>
   );

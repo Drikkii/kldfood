@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { createOrder } from "../api/client";
 import { CartLineControls } from "../components/CartLineControls";
@@ -26,6 +26,10 @@ export function CheckoutPage() {
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     loadLocations().then(setLocations);

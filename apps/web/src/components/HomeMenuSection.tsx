@@ -1,6 +1,6 @@
 import type { MenuProduct } from "../types/catalog";
 import { productImageUrl } from "../data/placeholder-images";
-import { productDisplayPrice } from "../utils/menu-pricing";
+import { productPriceLabel } from "../utils/menu-pricing";
 
 type HomeMenuSectionProps = {
   sectionId: string;
@@ -26,11 +26,7 @@ export function HomeMenuSection({
       </h2>
       <div className="home-menu-section__grid">
         {products.map((product) => {
-          const price = productDisplayPrice(product);
-          const priceLabel =
-            product.priceFrom != null || (product.variantGroups?.length ?? 0) > 0
-              ? `от ${price} ₽`
-              : `${price} ₽`;
+          const priceLabel = productPriceLabel(product);
 
           return (
             <article key={product.id} className="home-product-card">

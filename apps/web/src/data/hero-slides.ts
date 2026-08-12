@@ -1,9 +1,11 @@
 import type { HeroSlide } from "../types/hero-slide";
 
+const base = import.meta.env.BASE_URL;
+
 const BRAND = {
-  recruitment: "/images/brand/brand-recruitment.jpg",
-  menu1: "/images/brand/brand-menu-1.jpg",
-  menu2: "/images/brand/brand-menu-2.jpg",
+  recruitment: `${base}images/brand/brand-recruitment.jpg`,
+  menu1: `${base}images/brand/brand-menu-1.jpg`,
+  menu2: `${base}images/brand/brand-menu-2.jpg`,
 } as const;
 
 /** Слайды в стиле бренда FIRE FOOD */

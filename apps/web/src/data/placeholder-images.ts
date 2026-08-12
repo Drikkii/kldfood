@@ -28,6 +28,8 @@ export const CATEGORY_IMAGES: Record<string, string> = {
   "cat-builder": PLACEHOLDER.builder,
   "cat-drinks": PLACEHOLDER.drinkCold,
   "cat-drinks-cold": PLACEHOLDER.drinkCold,
+  "cat-spoons": PLACEHOLDER.box,
+  "cat-napkins": PLACEHOLDER.spread,
   "cat-drinks-hot": PLACEHOLDER.drinkHot,
 };
 

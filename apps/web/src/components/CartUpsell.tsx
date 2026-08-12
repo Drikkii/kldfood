@@ -4,7 +4,7 @@ import { productImageUrl } from "../data/placeholder-images";
 import { useSession } from "../context/SessionContext";
 import type { MenuProduct } from "../types/catalog";
 import { loadMenu } from "../utils/load-menu";
-import { productDisplayPrice } from "../utils/menu-pricing";
+import { productPriceLabel } from "../utils/menu-pricing";
 import { productToCartLine } from "../utils/product-to-cart-line";
 
 type CartUpsellProps = {
@@ -20,11 +20,7 @@ type CartUpsellCardProps = {
 };
 
 function CartUpsellCard({ product, cartQuantity, compact, onAdd }: CartUpsellCardProps) {
-  const price = productDisplayPrice(product);
-  const priceLabel =
-    product.priceFrom != null || (product.variantGroups?.length ?? 0) > 0
-      ? `от ${price} ₽`
-      : `${price} ₽`;
+  const priceLabel = productPriceLabel(product);
 
   return (
     <article className={`cart-upsell-card${compact ? " cart-upsell-card--compact" : ""}`}>

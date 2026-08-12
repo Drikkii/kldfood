@@ -220,7 +220,6 @@
       "categoryId": "cat-drinks-cold",
       "name": "Добрый Кола",
       "imageUrl": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=800&q=80",
-      "priceFrom": 70,
       "rkeeperCode": null,
       "variantGroups": [
         {

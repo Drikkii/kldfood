@@ -7,6 +7,7 @@ import {
   type CSSProperties,
   type MouseEvent,
   type RefObject,
+  type TouchEvent,
   type TransitionEvent,
 } from "react";
 import { Link } from "react-router-dom";
@@ -15,26 +16,50 @@ import type { HeroSlide } from "../types/hero-slide";
 
 const AUTOPLAY_MS = 5000;
 const SLIDE_WIDTH_RATIO = 0.82;
+const SLIDE_WIDTH_RATIO_MOBILE = 1;
 const SLIDE_GAP_PX = 16;
+const SLIDE_GAP_PX_MOBILE = 0;
+const MOBILE_MAX_WIDTH = 900;
 const TRACK_TRANSITION_MS = 450;
+const SWIPE_THRESHOLD_PX = 48;
 
 type Metrics = {
   slideWidth: number;
   peek: number;
+  slideGap: number;
+  isMobile: boolean;
 };
 
 function useSliderMetrics(viewportRef: RefObject<HTMLDivElement | null>) {
-  const [metrics, setMetrics] = useState<Metrics>({ slideWidth: 0, peek: 0 });
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches,
+  );
+  const [metrics, setMetrics] = useState<Metrics>({
+    slideWidth: 0,
+    peek: 0,
+    slideGap: SLIDE_GAP_PX,
+    isMobile,
+  });
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
+    const onMqChange = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", onMqChange);
+    return () => mq.removeEventListener("change", onMqChange);
+  }, []);
 
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
 
+    const ratio = isMobile ? SLIDE_WIDTH_RATIO_MOBILE : SLIDE_WIDTH_RATIO;
+    const gap = isMobile ? SLIDE_GAP_PX_MOBILE : SLIDE_GAP_PX;
+
     const update = () => {
       const width = el.clientWidth;
-      const slideWidth = width * SLIDE_WIDTH_RATIO;
+      const slideWidth = width * ratio;
       const peek = (width - slideWidth) / 2;
-      setMetrics({ slideWidth, peek });
+      setMetrics({ slideWidth, peek, slideGap: gap, isMobile });
     };
 
     const onVisibility = () => {
@@ -51,7 +76,7 @@ function useSliderMetrics(viewportRef: RefObject<HTMLDivElement | null>) {
       observer.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [viewportRef]);
+  }, [viewportRef, isMobile]);
 
   return metrics;
 }
@@ -143,7 +168,8 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
   const count = slides.length;
   const isLoop = count > 1;
   const viewportRef = useRef<HTMLDivElement>(null);
-  const { slideWidth, peek } = useSliderMetrics(viewportRef);
+  const touchStartX = useRef(0);
+  const { slideWidth, peek, slideGap, isMobile } = useSliderMetrics(viewportRef);
   const [position, setPosition] = useState(isLoop ? 1 : 0);
   const [animating, setAnimating] = useState(true);
   const [paused, setPaused] = useState(false);
@@ -194,6 +220,26 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
     setPosition((prev) => (isLoop ? prev - 1 : (prev - 1 + count) % count));
   }, [count, isLoop]);
 
+  const onTouchStart = useCallback((event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? 0;
+    setPaused(true);
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (event: TouchEvent<HTMLDivElement>) => {
+      const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+      const delta = endX - touchStartX.current;
+
+      if (Math.abs(delta) >= SWIPE_THRESHOLD_PX) {
+        if (delta < 0) goNext();
+        else goPrev();
+      }
+
+      setPaused(false);
+    },
+    [goNext, goPrev],
+  );
+
   const onTrackTransitionEnd = useCallback(
     (event: TransitionEvent<HTMLDivElement>) => {
       if (!isLoop) return;
@@ -243,11 +289,11 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
   if (count === 0) return null;
 
   const trackIndex = isLoop ? position : 0;
-  const offset = peek - trackIndex * (slideWidth + SLIDE_GAP_PX);
+  const offset = peek - trackIndex * (slideWidth + slideGap);
 
   return (
     <section
-      className="hero-slider"
+      className={`hero-slider${isMobile ? " hero-slider--mobile" : ""}`}
       aria-roledescription="carousel"
       aria-label="Акции и новости"
       onMouseEnter={() => setPaused(true)}
@@ -260,11 +306,16 @@ export function HeroSlider({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
       }}
     >
       <div className="hero-slider__frame">
-        <div className="hero-slider__viewport" ref={viewportRef}>
+        <div
+          className="hero-slider__viewport"
+          ref={viewportRef}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           <div
             className={`hero-slider__track${animating ? " is-animating" : ""}`}
             style={{
-              gap: SLIDE_GAP_PX,
+              gap: slideGap,
               transform: slideWidth > 0 ? `translate3d(${offset}px, 0, 0)` : undefined,
             }}
             onTransitionEnd={onTrackTransitionEnd}

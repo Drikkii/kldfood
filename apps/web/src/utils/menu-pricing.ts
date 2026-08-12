@@ -21,6 +21,14 @@ export function productDisplayPrice(product: MenuProduct): number {
   return product.variantGroups?.[0]?.options[0]?.price ?? 0;
 }
 
+/** «от» только если задан priceFrom без вариантов (конструктор и т.п.). */
+export function productPriceLabel(product: MenuProduct): string {
+  const price = productDisplayPrice(product);
+  const showFrom =
+    product.priceFrom != null && (product.variantGroups?.length ?? 0) === 0;
+  return showFrom ? `от ${price} ₽` : `${price} ₽`;
+}
+
 export function categoryMinPrice(products: MenuProduct[]): number | null {
   if (products.length === 0) return null;
   return Math.min(...products.map(productDisplayPrice));
