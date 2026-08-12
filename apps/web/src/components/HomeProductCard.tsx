@@ -79,18 +79,16 @@ export function HomeProductCard({ product, onSelect }: HomeProductCardProps) {
           />
         ) : null}
         <div className="home-product-card__foot">
-          <div className="home-product-card__foot-main">
-            <span className="home-product-card__price">{priceLabel}</span>
-            {hasSizePicker && sizeGroup ? (
-              <ProductSizePicker
-                product={product}
-                group={sizeGroup}
-                selectedOptionId={selectedSizeId ?? sizeGroup.options[0].id}
-                onSelect={setSelectedSizeId}
-                disabled={product.stopped}
-              />
-            ) : null}
-          </div>
+          <span className="home-product-card__price">{priceLabel}</span>
+          {hasSizePicker && sizeGroup ? (
+            <ProductSizePicker
+              product={product}
+              group={sizeGroup}
+              selectedOptionId={selectedSizeId ?? sizeGroup.options[0].id}
+              onSelect={setSelectedSizeId}
+              disabled={product.stopped}
+            />
+          ) : null}
           <button
             type="button"
             className="home-product-card__btn"
