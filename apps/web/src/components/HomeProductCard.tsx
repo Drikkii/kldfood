@@ -53,50 +53,56 @@ export function HomeProductCard({ product, onSelect }: HomeProductCardProps) {
         aria-hidden="true"
       />
       <div className="home-product-card__body">
-        <h3 className="home-product-card__name">
-          {product.name}
-          {product.id === "doner-vegan" ? (
-            <img
-              src={VEGAN_ICON_URL}
-              alt=""
-              className="home-product-card__vegan-icon"
-              width={20}
-              height={20}
-              draggable={false}
-            />
+        <div className="home-product-card__content">
+          <h3 className="home-product-card__name">
+            {product.name}
+            {product.id === "doner-vegan" ? (
+              <img
+                src={VEGAN_ICON_URL}
+                alt=""
+                className="home-product-card__vegan-icon"
+                width={20}
+                height={20}
+                draggable={false}
+              />
+            ) : null}
+          </h3>
+          {meta ? <p className="home-product-card__meta">{meta}</p> : null}
+          {product.description ? (
+            <p className="home-product-card__desc">{product.description}</p>
           ) : null}
-        </h3>
-        {meta ? <p className="home-product-card__meta">{meta}</p> : null}
-        {product.description ? (
-          <p className="home-product-card__desc">{product.description}</p>
-        ) : null}
-        {hasSaucePicker && sauceGroup ? (
-          <ProductSaucePicker
-            group={sauceGroup}
-            selectedOptionId={selectedSauceId ?? sauceGroup.options[0].id}
-            onSelect={setSelectedSauceId}
-            disabled={product.stopped}
-          />
-        ) : null}
-        <div className="home-product-card__foot">
-          <span className="home-product-card__price">{priceLabel}</span>
-          {hasSizePicker && sizeGroup ? (
-            <ProductSizePicker
-              product={product}
-              group={sizeGroup}
-              selectedOptionId={selectedSizeId ?? sizeGroup.options[0].id}
-              onSelect={setSelectedSizeId}
+        </div>
+        <div className="home-product-card__actions">
+          {hasSaucePicker && sauceGroup ? (
+            <div className="home-product-card__sauce-slot">
+              <ProductSaucePicker
+                group={sauceGroup}
+                selectedOptionId={selectedSauceId ?? sauceGroup.options[0].id}
+                onSelect={setSelectedSauceId}
+                disabled={product.stopped}
+              />
+            </div>
+          ) : null}
+          <div className="home-product-card__foot">
+            <span className="home-product-card__price">{priceLabel}</span>
+            {hasSizePicker && sizeGroup ? (
+              <ProductSizePicker
+                product={product}
+                group={sizeGroup}
+                selectedOptionId={selectedSizeId ?? sizeGroup.options[0].id}
+                onSelect={setSelectedSizeId}
+                disabled={product.stopped}
+              />
+            ) : null}
+            <button
+              type="button"
+              className="home-product-card__btn"
               disabled={product.stopped}
-            />
-          ) : null}
-          <button
-            type="button"
-            className="home-product-card__btn"
-            disabled={product.stopped}
-            onClick={handleAdd}
-          >
-            Выбрать
-          </button>
+              onClick={handleAdd}
+            >
+              Выбрать
+            </button>
+          </div>
         </div>
       </div>
     </article>
