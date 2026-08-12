@@ -2038,6 +2038,16 @@ button {
     gap: 2.5rem;
     margin-top: 0.65rem;
     padding-bottom: 0.15rem;
+    /* не перекрывать правую стрелку FAB-корзиной */
+    padding-right: 4.5rem;
+    box-sizing: border-box;
+  }
+
+  .home-reviews__arrow {
+    position: relative;
+    z-index: 95;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .home-reviews__scroll {

@@ -2,6 +2,26 @@ import { useCallback, useRef } from "react";
 import { REVIEWS } from "../data/reviews";
 import { SITE_LINKS } from "../data/site-links";
 
+function getCardScrollLeft(container: HTMLElement, card: HTMLElement): number {
+  const containerRect = container.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  return container.scrollLeft + (cardRect.left - containerRect.left);
+}
+
+function getActiveReviewIndex(container: HTMLElement, cards: HTMLElement[]): number {
+  const scrollLeft = container.scrollLeft;
+  let index = 0;
+
+  for (let i = 0; i < cards.length; i++) {
+    const cardStart = getCardScrollLeft(container, cards[i]);
+    if (cardStart <= scrollLeft + 6) {
+      index = i;
+    }
+  }
+
+  return index;
+}
+
 function Stars({ rating }: { rating: number }) {
   return (
     <span className="home-reviews-card__stars" aria-label={`Оценка ${rating} из 5`}>
@@ -28,25 +48,13 @@ export function ReviewsSection() {
     const cards = Array.from(el.querySelectorAll<HTMLElement>(".home-reviews-card"));
     if (cards.length === 0) return;
 
-    const scrollLeft = el.scrollLeft;
-    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
-    const epsilon = 4;
+    const currentIndex = getActiveReviewIndex(el, cards);
+    const targetIndex =
+      direction === 1
+        ? Math.min(currentIndex + 1, cards.length - 1)
+        : Math.max(currentIndex - 1, 0);
 
-    let targetLeft: number;
-
-    if (direction === 1) {
-      const nextCard = cards.find((card) => card.offsetLeft > scrollLeft + epsilon);
-      targetLeft = nextCard ? nextCard.offsetLeft : maxScroll;
-    } else {
-      targetLeft = 0;
-      for (const card of cards) {
-        if (card.offsetLeft < scrollLeft - epsilon) {
-          targetLeft = card.offsetLeft;
-        } else {
-          break;
-        }
-      }
-    }
+    const targetLeft = getCardScrollLeft(el, cards[targetIndex]);
 
     el.scrollTo({
       left: targetLeft,
