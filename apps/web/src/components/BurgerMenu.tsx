@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BrandLogo } from "./BrandLogo";
+import { SiteSocialLinks } from "./SiteSocialLinks";
 import { lockPageScroll } from "../utils/lock-page-scroll";
 
 const LINKS = [
@@ -48,6 +49,13 @@ export function BurgerMenu({ open, onClose }: BurgerMenuProps) {
             </Link>
           ))}
         </nav>
+        <footer className="burger-panel__foot">
+          <SiteSocialLinks />
+          <Link to="/privacy" className="burger-panel__policy" onClick={onClose}>
+            Политика конфиденциальности
+          </Link>
+          <span className="burger-panel__mark">© 2026 FIRE FOOD</span>
+        </footer>
       </aside>
     </div>
   );

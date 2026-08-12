@@ -12,9 +12,19 @@ export function isSizeVariantGroup(group: VariantGroup): boolean {
   return group.kind === "size" || group.id === "size";
 }
 
+export function isSauceVariantGroup(group: VariantGroup): boolean {
+  return group.kind === "sauce" || group.id === "sauce";
+}
+
 const SIZE_CATEGORY_IDS = new Set(["cat-shawarma", "cat-doner", "cat-lavash-dogs"]);
+const SHAWARMA_CATEGORY_ID = "cat-shawarma";
 const DONER_CATEGORY_ID = "cat-doner";
 const LAVASH_DOGS_CATEGORY_ID = "cat-lavash-dogs";
+const SAUCE_PRICE_STEP_RUB = 30;
+
+export function isShawarmaProduct(product: MenuProduct): boolean {
+  return product.categoryId === SHAWARMA_CATEGORY_ID;
+}
 
 export function isDonerProduct(product: MenuProduct): boolean {
   return product.categoryId === DONER_CATEGORY_ID;
@@ -85,6 +95,47 @@ export function getSizeVariantGroup(product: MenuProduct): VariantGroup | null {
   return trimSizeGroupForCategory(group, product);
 }
 
+export function getSauceVariantGroup(product: MenuProduct): VariantGroup | null {
+  return product.variantGroups?.find(isSauceVariantGroup) ?? null;
+}
+
+function buildSauceVariantGroup(): VariantGroup {
+  return {
+    id: "sauce",
+    name: "Соус",
+    kind: "sauce",
+    required: true,
+    options: [
+      {
+        id: "classic",
+        name: "Классическая",
+        price: 0,
+        priceDelta: 0,
+        isDefault: true,
+      },
+      {
+        id: "cheese",
+        name: "Сырная",
+        price: SAUCE_PRICE_STEP_RUB,
+        priceDelta: SAUCE_PRICE_STEP_RUB,
+      },
+    ],
+  };
+}
+
+export function ensureShawarmaSauceVariants(product: MenuProduct): MenuProduct {
+  if (!isShawarmaProduct(product)) return product;
+
+  const existing = getSauceVariantGroup(product);
+  if (existing && existing.options.length >= 2) return product;
+
+  const otherGroups = (product.variantGroups ?? []).filter((g) => !isSauceVariantGroup(g));
+  return {
+    ...product,
+    variantGroups: [...otherGroups, buildSauceVariantGroup()],
+  };
+}
+
 /** Гарантирует размеры: шаурма mini/standard/mega, денер mini/standard, лаваш-доги standard/mega. */
 export function ensureProductSizeVariants(product: MenuProduct): MenuProduct {
   if (!isSizeCategoryProduct(product)) return product;
@@ -115,7 +166,9 @@ export function ensureProductSizeVariants(product: MenuProduct): MenuProduct {
 }
 
 export function ensureMenuProductSizes(products: MenuProduct[]): MenuProduct[] {
-  return products.map(ensureProductSizeVariants);
+  return products.map((product) =>
+    ensureShawarmaSauceVariants(ensureProductSizeVariants(product)),
+  );
 }
 
 export function productHasSizePicker(product: MenuProduct): boolean {
@@ -146,9 +199,24 @@ export function defaultSizeOptionId(product: MenuProduct): string | null {
   return defaultSizeOption(group, product)?.id ?? null;
 }
 
+function defaultSauceOption(group: VariantGroup): VariantOption | undefined {
+  return (
+    group.options.find((o) => o.id === "classic") ??
+    group.options.find((o) => o.isDefault) ??
+    group.options[0]
+  );
+}
+
+export function defaultSauceOptionId(product: MenuProduct): string | null {
+  const group = getSauceVariantGroup(product);
+  if (!group) return null;
+  return defaultSauceOption(group)?.id ?? null;
+}
+
 export function buildProductSelections(
   product: MenuProduct,
   sizeOptionId?: string | null,
+  sauceOptionId?: string | null,
 ): ProductSelection[] {
   const groups = product.variantGroups ?? [];
   return groups
@@ -157,6 +225,13 @@ export function buildProductSelections(
         const optionId =
           sizeOptionId ??
           defaultSizeOption(group, product)?.id ??
+          "";
+        return { groupId: group.id, optionId };
+      }
+      if (isSauceVariantGroup(group)) {
+        const optionId =
+          sauceOptionId ??
+          defaultSauceOption(group)?.id ??
           "";
         return { groupId: group.id, optionId };
       }
@@ -202,6 +277,22 @@ export function getSelectedSizeOption(
   const group = getSizeVariantGroup(product);
   if (!group) return null;
   return getSelectedOption(product, group.id, selections);
+}
+
+export function getSelectedSauceOption(
+  product: MenuProduct,
+  selections: ProductSelection[],
+): VariantOption | null {
+  const group = getSauceVariantGroup(product);
+  if (!group) return null;
+  return getSelectedOption(product, group.id, selections);
+}
+
+export function variantOptionCartLabel(option: VariantOption): string {
+  if (option.name) return option.name;
+  if (SIZE_CART_LABELS[option.id]) return SIZE_CART_LABELS[option.id];
+  if (option.iconKey) return option.iconKey;
+  return option.id;
 }
 
 /** Admin helper: mini + фиксированные шаги цены/веса */

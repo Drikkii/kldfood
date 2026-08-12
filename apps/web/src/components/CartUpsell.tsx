@@ -4,7 +4,7 @@ import { productImageUrl } from "../data/placeholder-images";
 import { useSession } from "../context/SessionContext";
 import type { MenuProduct } from "../types/catalog";
 import { loadMenu } from "../utils/load-menu";
-import { productPriceLabel } from "../utils/menu-pricing";
+import { productDisplayMeta, productPriceLabel } from "../utils/menu-pricing";
 import { productToCartLine } from "../utils/product-to-cart-line";
 
 type CartUpsellProps = {
@@ -21,6 +21,7 @@ type CartUpsellCardProps = {
 
 function CartUpsellCard({ product, cartQuantity, compact, onAdd }: CartUpsellCardProps) {
   const priceLabel = productPriceLabel(product);
+  const meta = productDisplayMeta(product);
 
   return (
     <article className={`cart-upsell-card${compact ? " cart-upsell-card--compact" : ""}`}>
@@ -33,6 +34,7 @@ function CartUpsellCard({ product, cartQuantity, compact, onAdd }: CartUpsellCar
       />
       <div className="cart-upsell-card__body">
         <h4 className="cart-upsell-card__name">{product.name}</h4>
+        {meta ? <p className="cart-upsell-card__meta">{meta}</p> : null}
         <div className="cart-upsell-card__foot">
           <span className="cart-upsell-card__price">{priceLabel}</span>
           <button

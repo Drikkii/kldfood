@@ -4,6 +4,7 @@ export const SHAWERMA_ICON_URL = `${import.meta.env.BASE_URL}images/shawerma.png
 export const DONER_ICON_URL = `${import.meta.env.BASE_URL}images/dener-png.png`;
 export const SOSISKA_ICON_URL = `${import.meta.env.BASE_URL}images/sosiska-big-proz.png`;
 export const SOSISKA_2_ICON_URL = `${import.meta.env.BASE_URL}images/sosiska-big2-proz.png`;
+export const VEGAN_ICON_URL = `${import.meta.env.BASE_URL}images/vegan.png`;
 
 export const FAVICON_BASE = `${import.meta.env.BASE_URL}favicon/`;
 

@@ -19,8 +19,8 @@ export type MenuCategory = {
 
 export type SizeIconKey = "mini" | "standard" | "mega";
 
-/** Admin: kind="size" → UI с иконками; options задают цену/вес или priceDelta/weightDelta от mini */
-export type VariantGroupKind = "size" | "default";
+/** Admin: kind="size" → UI с иконками; kind="sauce" → классическая/сырная */
+export type VariantGroupKind = "size" | "sauce" | "default";
 
 export type VariantOption = {
   id: string;

@@ -13,6 +13,17 @@ import { buildReadyTimeSlots, defaultReadyTimeSlot } from "../utils/ready-time-s
 
 type PaymentMethod = "cash" | "online";
 
+function CheckoutMenuBackLink() {
+  return (
+    <Link to="/" className="checkout-page__menu-back">
+      <span className="checkout-page__menu-back-arrow" aria-hidden="true">
+        ←
+      </span>
+      Меню
+    </Link>
+  );
+}
+
 export function CheckoutPage() {
   const { fulfillment, location, cart, cartTotal, clearCart, setLocation } = useSession();
   const readyTimeSlots = useMemo(() => buildReadyTimeSlots(), []);
@@ -101,9 +112,17 @@ export function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <p>
-        Корзина пуста. <Link to="/">Меню</Link>
-      </p>
+      <section className="checkout-page">
+        <nav className="checkout-page__crumbs" aria-label="Навигация">
+          <Link to="/">Главная</Link>
+          <span aria-hidden="true">/</span>
+          <span>Оформление заказа</span>
+        </nav>
+        <div className="checkout-page__empty">
+          <CheckoutMenuBackLink />
+          <p className="checkout-page__empty-text">Корзина пуста.</p>
+        </div>
+      </section>
     );
   }
 
@@ -122,6 +141,7 @@ export function CheckoutPage() {
 
       <div className="checkout-page__layout">
         <aside className="checkout-page__cart" aria-label="Ваш заказ">
+          <CheckoutMenuBackLink />
           <ul className="checkout-cart__lines">
             {cart.map((line, i) => (
               <li key={`${line.productId}-${i}`} className="checkout-cart__line">

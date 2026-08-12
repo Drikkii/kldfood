@@ -3,6 +3,7 @@ import {
   buildProductSelections,
   getSelectedSizeOption,
   getSizeVariantGroup,
+  isSizeVariantGroup,
   type ProductSelection,
 } from "./product-size";
 
@@ -18,13 +19,27 @@ function priceFromSelections(product: MenuProduct, selections: ProductSelection[
     return 0;
   }
 
-  let price: number | null = null;
+  let sizePrice: number | null = null;
+  let extras = 0;
+
   for (const sel of selections) {
     const group = groups.find((g) => g.id === sel.groupId);
     const opt = group?.options.find((o) => o.id === sel.optionId);
-    if (opt) price = opt.price;
+    if (!group || !opt) continue;
+
+    if (isSizeVariantGroup(group)) {
+      sizePrice = opt.price;
+      continue;
+    }
+
+    extras += opt.priceDelta ?? opt.price ?? 0;
   }
-  return price ?? product.basePrice ?? product.priceFrom ?? 0;
+
+  if (sizePrice != null) return sizePrice + extras;
+
+  if (product.basePrice != null) return product.basePrice + extras;
+  if (product.priceFrom != null) return product.priceFrom + extras;
+  return extras;
 }
 
 export function productDisplayPrice(
