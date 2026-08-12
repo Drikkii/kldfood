@@ -6,6 +6,12 @@ export const SOSISKA_ICON_URL = `${import.meta.env.BASE_URL}images/sosiska-big-p
 export const SOSISKA_2_ICON_URL = `${import.meta.env.BASE_URL}images/sosiska-big2-proz.png`;
 export const VEGAN_ICON_URL = `${import.meta.env.BASE_URL}images/vegan.png`;
 
+export const VEGAN_PRODUCT_IDS = new Set(["doner-vegan", "shawarma-vegan"]);
+
+export function isVeganProduct(productId: string): boolean {
+  return VEGAN_PRODUCT_IDS.has(productId);
+}
+
 export const FAVICON_BASE = `${import.meta.env.BASE_URL}favicon/`;
 
 export const PRODUCT_IMAGE_BASE = `${import.meta.env.BASE_URL}images/products/`;

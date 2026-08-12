@@ -1644,11 +1644,16 @@ button {
   bottom: 0;
   z-index: 2;
   padding: 0.45rem 0.2rem 0.35rem;
+  font-family: var(--ff-font-display);
   font-size: 0.625rem;
-  font-weight: 800;
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--ff-white);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%);
   pointer-events: none;
@@ -1678,15 +1683,21 @@ button {
 }
 
 .category-tiles__name {
+  font-family: var(--ff-font-display);
   font-size: 0.6875rem;
-  font-weight: 800;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .category-tiles__price {
+  font-family: var(--ff-font-display);
   font-size: 0.625rem;
-  font-weight: 700;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 @media (hover: hover) {
@@ -2921,9 +2932,12 @@ button {
 
 .home-product-card__name {
   margin: 0;
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.25;
+  font-family: var(--ff-font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -3393,7 +3407,7 @@ button {
     justify-content: flex-start;
     column-gap: 0.25rem;
     row-gap: 0.45rem;
-    min-height: calc(var(--size-icon-slot-h) + 1.55rem);
+    min-height: calc(var(--size-icon-slot-h) + 1.95rem);
   }
 
   .home-product-card--has-sizes .product-size-picker {
@@ -3413,7 +3427,7 @@ button {
     order: 3;
     flex: 1 1 100%;
     text-align: right;
-    padding-top: 0.2rem;
+    padding-top: 0.6rem;
     font-size: 1.0625rem;
   }
 }
@@ -3659,7 +3673,7 @@ button {
   }
 
   .home-product-card__name {
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
   }
 
   .home-product-card__foot {
@@ -3770,16 +3784,34 @@ button {
   }
 
   .category-tiles__caption {
-    font-size: clamp(0.5rem, 0.48vw, 0.5625rem);
-    padding: 0.32rem 0.14rem 0.25rem;
+    font-size: 0.6875rem;
+    padding: 0.34rem 0.12rem 0.28rem;
   }
 
   .category-tiles__name {
-    font-size: 0.5625rem;
+    font-size: 0.8125rem;
   }
 
   .category-tiles__price {
-    font-size: 0.5rem;
+    font-size: 0.6875rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .category-tiles__grid {
+    --category-nav-tile-max: 86px;
+  }
+
+  .category-tiles__caption {
+    font-size: 0.75rem;
+  }
+
+  .category-tiles__name {
+    font-size: 0.875rem;
+  }
+
+  .category-tiles__price {
+    font-size: 0.75rem;
   }
 }
 
@@ -3807,7 +3839,7 @@ button {
 
   .category-tiles__grid {
     --category-nav-gap: 0.35rem;
-    --category-nav-tile-max: 92px;
+    --category-nav-tile-max: 112px;
   }
 
   .home-catalog__categories.home-catalog__rail,
@@ -3824,16 +3856,16 @@ button {
   }
 
   .category-tiles__caption {
-    font-size: 0.5625rem;
-    padding: 0.35rem 0.18rem 0.28rem;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.15rem 0.32rem;
   }
 
   .category-tiles__name {
-    font-size: 0.625rem;
+    font-size: 1rem;
   }
 
   .category-tiles__price {
-    font-size: 0.5625rem;
+    font-size: 0.8125rem;
   }
 
   .home-menu-section {
@@ -3859,7 +3891,7 @@ button {
   }
 
   .home-product-card__name {
-    font-size: 1.0625rem;
+    font-size: 1.1875rem;
   }
 
   .home-product-card__meta,

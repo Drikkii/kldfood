@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { CartLine, MenuProduct } from "../types/catalog";
 import { productImageUrl } from "../data/placeholder-images";
-import { VEGAN_ICON_URL } from "../data/brand-assets";
+import { isVeganProduct, VEGAN_ICON_URL } from "../data/brand-assets";
 import { productDisplayMeta, productPriceLabel } from "../utils/menu-pricing";
 import {
   buildProductSelections,
@@ -56,7 +56,7 @@ export function HomeProductCard({ product, onSelect }: HomeProductCardProps) {
         <div className="home-product-card__content">
           <h3 className="home-product-card__name">
             {product.name}
-            {product.id === "doner-vegan" ? (
+            {isVeganProduct(product.id) ? (
               <img
                 src={VEGAN_ICON_URL}
                 alt=""

@@ -13,7 +13,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "slide-1",
     title: "Шаурма FIRE FOOD",
-    subtitle: "Курица · Говядина · Mix · Vegan",
+    subtitle: "Курица · Говядина · Микс · Веган",
     imageUrl: BRAND.menu2,
     accent: "#ffcc00",
     link: "/",
@@ -21,7 +21,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "slide-2",
     title: "Курица и картофель",
-    subtitle: "mini · standart · mega",
+    subtitle: "мини · стандарт · мега",
     imageUrl: BRAND.menu1,
     accent: "#e60000",
     link: "/",
