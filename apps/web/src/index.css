@@ -2065,12 +2065,11 @@ button {
   flex-direction: column;
   height: 100%;
   max-width: 100%;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s;
 }
 
 .home-product-card:hover {
   border-color: var(--ff-yellow);
-  transform: translateY(-2px);
 }
 
 .home-product-card__image {
@@ -2080,6 +2079,14 @@ button {
   background-repeat: no-repeat;
   background-color: var(--ff-image-placeholder);
   border-bottom: 2px solid var(--ff-yellow);
+  transition: transform 0.35s ease;
+  transform-origin: center center;
+}
+
+@media (hover: hover) {
+  .home-product-card:hover .home-product-card__image {
+    transform: scale(1.06);
+  }
 }
 
 .menu-category__banner {
@@ -3639,7 +3646,7 @@ button {
     background: var(--ff-red);
     color: var(--ff-white);
     box-shadow: 0 6px 20px rgba(230, 0, 0, 0.45);
-    transition: background 0.15s, transform 0.15s;
+    transition: background 0.15s, transform 0.15s, bottom 0.2s ease;
   }
 
   .mobile-cart-fab:hover {

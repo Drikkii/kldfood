@@ -1,6 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CartDrawer } from "./CartDrawer";
 import { useSession } from "../context/SessionContext";
+
+const MOBILE_CART_MQ = "(max-width: 1023px)";
+/** Зазор между низом кнопки и красной линией футера */
+const FOOTER_CLEARANCE_PX = 20;
+const DEFAULT_BOTTOM_REM = 1.15;
 
 function IconCart() {
   return (
@@ -13,22 +18,65 @@ function IconCart() {
   );
 }
 
+function readDefaultBottomPx(): number {
+  return DEFAULT_BOTTOM_REM * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
 export function MobileCart() {
   const { cart } = useSession();
   const [open, setOpen] = useState(false);
+  const [fabBottomPx, setFabBottomPx] = useState<number | null>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
 
   const itemCount = useMemo(
     () => cart.reduce((sum, line) => sum + line.quantity, 0),
     [cart],
   );
 
+  useEffect(() => {
+    const media = window.matchMedia(MOBILE_CART_MQ);
+
+    function updateFabBottom() {
+      if (!media.matches) {
+        setFabBottomPx(null);
+        return;
+      }
+
+      const footer = document.querySelector(".site-footer");
+      if (!footer) return;
+
+      const footerTop = footer.getBoundingClientRect().top;
+      const viewportHeight = window.innerHeight;
+      const defaultBottom = readDefaultBottomPx();
+
+      // bottom >= vh - footerTop + clearance → низ кнопки выше красной линии футера
+      const liftedBottom = viewportHeight - footerTop + FOOTER_CLEARANCE_PX;
+
+      setFabBottomPx(Math.max(defaultBottom, liftedBottom));
+    }
+
+    updateFabBottom();
+
+    window.addEventListener("scroll", updateFabBottom, { passive: true });
+    window.addEventListener("resize", updateFabBottom);
+    media.addEventListener("change", updateFabBottom);
+
+    return () => {
+      window.removeEventListener("scroll", updateFabBottom);
+      window.removeEventListener("resize", updateFabBottom);
+      media.removeEventListener("change", updateFabBottom);
+    };
+  }, []);
+
   return (
     <>
       <button
+        ref={fabRef}
         type="button"
         className="mobile-cart-fab"
         aria-label={itemCount > 0 ? `Корзина, ${itemCount} товаров` : "Корзина"}
         onClick={() => setOpen(true)}
+        style={fabBottomPx != null ? { bottom: `${fabBottomPx}px` } : undefined}
       >
         <IconCart />
         {itemCount > 0 ? (
