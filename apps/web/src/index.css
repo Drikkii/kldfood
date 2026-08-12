@@ -3047,11 +3047,12 @@ button {
 }
 
 .home-product-card__foot {
+  --card-foot-gap: 0.45rem;
   padding-top: 0;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 0.35rem;
+  gap: var(--card-foot-gap);
   flex-wrap: nowrap;
   flex-shrink: 0;
 }
@@ -3170,7 +3171,7 @@ button {
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: auto;
   align-items: end;
-  gap: 0.25rem;
+  gap: var(--card-foot-gap, 0.45rem);
   flex-wrap: nowrap;
   min-height: var(--size-icon-slot-h);
 }
@@ -3366,6 +3367,7 @@ button {
 
 .home-product-card__btn {
   padding: 0.4rem 0.7rem;
+  margin-inline-start: calc(var(--card-foot-gap, 0.45rem) * 0.5);
   border-radius: var(--ff-radius-pill);
   background: var(--ff-red);
   color: var(--ff-white);
@@ -3386,11 +3388,13 @@ button {
   cursor: not-allowed;
 }
 
-/* Карточки с выбором размера — цена слева, размер по центру строки, кнопка справа */
+/* Мобилка — единая крупная кнопка «Выбрать» на всех карточках (+50%) */
 @media (max-width: 1023px) {
+  .home-product-card__btn,
   .home-product-card--has-sizes .home-product-card__btn {
-    padding: 0.22rem 0.35rem;
-    font-size: 0.5625rem;
+    padding: 0.42rem 0.735rem;
+    font-size: 0.7875rem;
+    letter-spacing: 0.03em;
   }
 
   .home-product-card--has-sizes .home-product-card__price {
@@ -3405,8 +3409,8 @@ button {
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: flex-start;
-    column-gap: 0.25rem;
-    row-gap: 0.45rem;
+    column-gap: calc(var(--card-foot-gap, 0.45rem) * 1.5);
+    row-gap: var(--card-foot-gap, 0.45rem);
     min-height: calc(var(--size-icon-slot-h) + 1.95rem);
   }
 
@@ -3427,7 +3431,7 @@ button {
     order: 3;
     flex: 1 1 100%;
     text-align: right;
-    padding-top: 0.6rem;
+    padding-top: 0;
     font-size: 1.0625rem;
   }
 }
@@ -3677,18 +3681,12 @@ button {
   }
 
   .home-product-card__foot {
-    gap: 0.25rem;
+    gap: var(--card-foot-gap, 0.45rem);
     padding-top: 0.4rem;
   }
 
   .home-product-card__price {
     font-size: 0.9375rem;
-  }
-
-  .home-product-card__btn {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.625rem;
-    letter-spacing: 0.02em;
   }
 }
 
