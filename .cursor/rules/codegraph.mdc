@@ -1,0 +1,6 @@
+---
+description: Prefer CodeGraph for efficient codebase exploration
+alwaysApply: true
+---
+
+When `.codegraph/` exists, use the CodeGraph MCP `codegraph_explore` tool before broad grep, directory scans, or reading multiple complete files. Treat source returned by CodeGraph as already read; do not re-read it unless the result is stale or incomplete. Read full files only when needed to make or verify an edit.
