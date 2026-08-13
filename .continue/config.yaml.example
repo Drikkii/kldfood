@@ -1,0 +1,33 @@
+name: Kldfood Local Routine
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Local Qwen Coder 7B
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      temperature: 0.2
+      contextLength: 4096
+      maxTokens: 2048
+    keepAlive: 300
+
+  - name: Local Qwen Autocomplete 1.5B
+    provider: ollama
+    model: qwen2.5-coder:1.5b-base
+    apiBase: http://localhost:11434
+    roles:
+      - autocomplete
+    autocompleteOptions:
+      debounceDelay: 350
+      maxPromptTokens: 1024
+      onlyMyCode: true
+      useImports: true
+      useRecentlyEdited: true

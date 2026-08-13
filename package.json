@@ -18,10 +18,19 @@
     "build:gh-pages": "cross-env VITE_BASE_PATH=/kldfood/ npm run build -w @kldfood/web",
     "deploy:gh-pages": "npm run build:gh-pages && gh-pages -d dist -t --nojekyll",
     "preview:gh-pages": "npm run build:gh-pages && npm run preview -w @kldfood/web",
-    "start": "npm run start -w @kldfood/api"
+    "start": "npm run start -w @kldfood/api",
+    "lint": "eslint apps/web/src apps/api/src scripts eslint.config.mjs",
+    "typecheck": "tsc --noEmit -p apps/web/tsconfig.json",
+    "test": "node --test scripts/ai-task-router.test.mjs",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "ai:route": "node scripts/ai-task-router.mjs"
   },
   "devDependencies": {
+    "@eslint/js": "9.17.0",
     "cross-env": "^7.0.3",
-    "gh-pages": "^6.3.0"
+    "eslint": "9.17.0",
+    "gh-pages": "^6.3.0",
+    "globals": "15.14.0",
+    "typescript-eslint": "8.18.2"
   }
 }

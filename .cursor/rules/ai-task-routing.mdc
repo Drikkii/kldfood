@@ -1,0 +1,10 @@
+---
+description: Route AI tasks and protect high-risk areas
+alwaysApply: true
+---
+
+Read `AGENTS.md`, `TASK.md`, and `PROJECT_STATUS.md` before making changes.
+
+Run `npm run ai:route -- "<task>"` if the task has not been classified. If it is LOW, tell the user that Continue with the local Ollama model is the intended workflow. Premium Agent work is reserved for HIGH tasks.
+
+For HIGH tasks, inspect first, propose a short plan, name risks, and keep the change tightly scoped. Never modify payment, checkout, R-Keeper, database, authentication, secrets, deployment, or business rules merely as a side effect. Run `npm run check` before completion.

@@ -17,14 +17,14 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export function fetchLocations() {
-  return apiFetch<{ locations: import("./types/catalog").Location[] }>("/api/locations");
+  return apiFetch<{ locations: import("../types/catalog").Location[] }>("/api/locations");
 }
 
 export function fetchMenu(locationId: string | null) {
   const q = locationId ? `?locationId=${encodeURIComponent(locationId)}` : "";
   return apiFetch<{
-    categories: import("./types/catalog").MenuCategory[];
-    products: import("./types/catalog").MenuProduct[];
+    categories: import("../types/catalog").MenuCategory[];
+    products: import("../types/catalog").MenuProduct[];
   }>(`/api/menu${q}`);
 }
 
